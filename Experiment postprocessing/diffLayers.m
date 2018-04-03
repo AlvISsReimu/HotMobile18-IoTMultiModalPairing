@@ -1,4 +1,4 @@
-function diffLayers( datetimes, min_layers, max_layers, offset )
+function diffLayers( datetimes, min_layers, max_layers, offset, isDiffRange, variance )
 
     UAVgravityFactor = 9.81;
 
@@ -22,17 +22,17 @@ function diffLayers( datetimes, min_layers, max_layers, offset )
                 else
                     index = 3;
                 end
-                max_UAV = max(data.a_UAV.(strAx).measured);
-                min_UAV = min(data.a_UAV.(strAx).measured);
-                max_cam = max(data.a_cam.(strAx).measured);
-                min_cam = min(data.a_cam.(strAx).measured);
+%                 max_UAV = max(data.a_UAV.(strAx).measured);
+%                 min_UAV = min(data.a_UAV.(strAx).measured);
+%                 max_cam = max(data.a_cam.(strAx).measured);
+%                 min_cam = min(data.a_cam.(strAx).measured);
     %             max_all = max(max_UAV * UAVgravityFactor, max_cam);
-                max_all = 3;
-                min_all = -3;
+                max_all = 5;
+                min_all = -5;
     %             min_all = min(min_UAV * UAVgravityFactor, min_cam);
                 % generate FP
-                fp_UAV = genFingerPrint(UAVgravityFactor.*data.a_UAV.(strAx).measured, min_all, max_all, layers);
-                fp_cam = genFingerPrint(data.a_cam.(strAx).measured, min_all, max_all, layers);
+                fp_UAV = genFingerPrint(UAVgravityFactor.*data.a_UAV.(strAx).measured, min_all, max_all, layers, isDiffRange, variance);
+                fp_cam = genFingerPrint(data.a_cam.(strAx).measured, min_all, max_all, layers, isDiffRange, variance);
                 % write into fps
                 fps_UAV{i, layers-min_layers+1, index} = fp_UAV;
                 fps_cam{i, layers-min_layers+1, index} = fp_cam;
