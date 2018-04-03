@@ -1,4 +1,4 @@
-function nonParingCompare(offset, filenum, min_layers, output_layer, output_axis)
+function z = nonParingCompare(offset, filenum, min_layers, output_layer, output_axis)
     load varibles.mat;
     for i = 1:filenum
         for j = 1:filenum
@@ -14,11 +14,13 @@ function nonParingCompare(offset, filenum, min_layers, output_layer, output_axis
             z(i,j) = sim;
         end
     end
-
+    
     figure;
     imagesc(z);
     axis xy;
+    set(gca,'CLim',[0,1]);
     colorbar;
+    title([num2str(output_layer) 'layers']);
 
     % x = linspace(1,filenum,filenum);
     % y = linspace(1,filenum,filenum);
