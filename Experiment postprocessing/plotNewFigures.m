@@ -1,6 +1,6 @@
-datetime = '2017-10-11 19-57-36';
+datetime = '2017-10-11 21-44-05';
 isPlotWave = 1;
-isPlotFP = 1;
+isPlotFP = 0;
 offset = 0.13;
 layers = 7;
 
@@ -17,9 +17,9 @@ for strAxCell = {'Y'}
     max_cam = max(data.a_cam.(strAx).measured);
     min_cam = min(data.a_cam.(strAx).measured);
 %     max_all = max(max_UAV, max_cam);
-    max_all = 3;
+    max_all = 5;
 %     min_all = min(min_UAV, min_cam);
-    min_all = -3;
+    min_all = -5;
     
     fp_UAV = genFingerPrint(UAVgravityFactor.*data.a_UAV.(strAx).measured, min_all, max_all, layers);
     fp_cam = genFingerPrint(data.a_cam.(strAx).measured, min_all, max_all, layers);
@@ -32,10 +32,11 @@ for strAxCell = {'Y'}
         title(strAx);
         hold on;
         % a_UAV
-%         plot(data.a_UAV.(strAx).t - offset, UAVgravityFactor.*data.a_UAV.(strAx).measured, 'r', 'LineWidth',1);
+        plot(data.a_UAV.(strAx).t - offset, UAVgravityFactor.*data.a_UAV.(strAx).measured, 'r', 'LineWidth',1);
         % a_cam
         plot(data.a_cam.(strAx).t, data.a_cam.(strAx).measured, 'b', 'LineWidth',1);
         legend('a_{UAV},raw', 'a_{UAV},filt', 'a_{cam}');
+        plot(X,K,'g');
     end
 	
     if isPlotFP == 1
@@ -43,7 +44,7 @@ for strAxCell = {'Y'}
         title('FP_' + strAx);
         hold on;
     %     fp_UAV
-%         plot(data.a_UAV.(strAx).t + offset, fp_UAV, 'r', 'LineWidth',1);
+        plot(data.a_UAV.(strAx).t + offset, fp_UAV, 'r', 'LineWidth',1);
     %     fp_cam
         plot(data.a_cam.(strAx).t, fp_cam, 'b', 'LineWidth',1);
         legend('fp_{UAV}', 'fp_{cam}');
